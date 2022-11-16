@@ -4,7 +4,8 @@ const PORT = process.env.PORT || 4020
 const express = require('express')
 // create instance of express so we can define our routes
 const app = express()
-// import body parser
+
+// import body parser - parses data from the frontend to backend
 const bodyParser = require('body-parser')
 // import cors
 const cors = require('cors')
@@ -64,7 +65,7 @@ app.get('/poke-cards', (req, res) => {
 
       // send back score data and a status 200 if everything goes alright
       res.status(200).send({
-        message: 'Here is the leaderboard',
+        message: 'Here is the list of pokemons',
         payload: allPokemonCards,
       })
     } catch (e) {
@@ -77,11 +78,12 @@ app.get('/poke-cards', (req, res) => {
   }
 
   // needs to be calling the async function
-  console.log(req.body)
+  console.log(data)
   getAllPokemon()
 })
 
-// Updata ONE document score with an ID and data that wants to be updated
+
+// Update ONE document score with an ID and data that wants to be updated
 app.put('/update-score', (req, res) => {
   // grab the new score info
   const data = req.body
@@ -117,6 +119,8 @@ app.put('/update-score', (req, res) => {
   updateScore()
 })
 
+
+/*
 // deleting ONE score document from leaderboard from an ID
 app.delete('/delete-score', (req, res) => {
   // grab the new score info
@@ -172,7 +176,7 @@ app.get('/get-score', (req, res) => {
 
   getScore()
 })
-
+*/
 // server listens on port 3000
 app.listen(PORT, () => {
   console.log(`Server is running on port:`, PORT)

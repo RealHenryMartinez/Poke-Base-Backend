@@ -27,12 +27,29 @@ let upload = multer({ storage, fileFilter });
 router.route('/addPokemon').post(upload.single('photo'), (req, res) => {
     const username = req.body.username;
     const pokemonName = req.body.pokemonName;
+    const foodOne = req.body.foodOne;
+    const foodTwo = req.body.foodTwo;
+    const foodThree = req.body.foodThree;
+
+    const pokemonRegion = req.body.pokemonRegion;
+    const pokemonTypeOne = req.body.pokemonTypeOne;
+    const pokemonTypeTwo = req.body.pokemonTypeTwo;
+    const pokemonGender = req.body.pokemonGender;
+    const pokemonCatch = req.body.pokemonCatch;
     const photo = req.file.filename;
 
     const newUserData = {
         username,
         pokemonName,
-        photo
+        photo,
+        foodOne,
+        foodTwo,
+        foodThree,
+        pokemonRegion,
+        pokemonGender,
+        pokemonCatch,
+        pokemonTypeOne,
+        pokemonTypeTwo
     }
 
     const newUser = new PokeModel(newUserData);
