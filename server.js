@@ -5,6 +5,7 @@ const express = require('express')
 // create instance of express so we can define our routes
 const app = express()
 
+
 // import body parser - parses data from the frontend to backend
 const bodyParser = require('body-parser')
 // import cors
@@ -21,9 +22,14 @@ require('dotenv').config()
 // import schema model
 const PokeModel = require('./models/pokemonModel');
 
-// using cors - allows the use of cross origin data sending
+// express being used to read the folder as static files
+app.use(express.static('images'));
+
+
 app.use(cors())
 app.use(express.json())
+
+
 
 /**
  * Handles db connection
@@ -50,8 +56,44 @@ connectToDb()
 // middleware - parse the json data / payload from our frontend
 app.use(bodyParser.json())
 
+
 // importing post request from userRouter
 app.use('/', userRouter)
+
+app.get("/poke-cards/:id", (req, res) => {
+  
+  // grab the new score info
+  const data = req.params;
+
+  console.log(data)
+  
+  async function getScore() {
+    try {
+      // find the document with the ID input on an API for it to perform the get action with .findByIdAndget
+      const getScore = await PokeModel.findById(
+        data.id
+        
+ 
+      );
+      console.log(getScore)
+
+      // send back score data and status ok
+      res.status(201).send({
+        message: `User's stats`,
+        payload: getScore,
+      });
+    } catch (e) {
+      console.log(e);
+      // send back error mesage
+      res.status(400).send({
+        message: "error happened",
+        data: e,
+      });
+    }
+  }
+
+  getScore();
+});
 
 // getting score from ALL USERS
 app.get('/poke-cards', (req, res) => {
