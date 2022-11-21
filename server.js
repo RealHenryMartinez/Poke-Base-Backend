@@ -60,6 +60,8 @@ app.use(bodyParser.json())
 // importing post request from userRouter
 app.use('/', userRouter)
 
+
+// grabbing one of the pokemon card
 app.get("/poke-cards/:id", (req, res) => {
   
   // grab the new score info
@@ -161,64 +163,36 @@ app.put('/update-score', (req, res) => {
   updateScore()
 })
 
-
-/*
 // deleting ONE score document from leaderboard from an ID
-app.delete('/delete-score', (req, res) => {
+app.delete("/delete-pokemon/:id", (req, res) => {
   // grab the new score info
-  const data = req.body
+  const id = req.params.id;
 
   async function deleteScore() {
     try {
       // find the document with the ID input on an API for it to perform the delete action with .findByIdAndDelete
-      const deletedScore = await scoreModel.findByIdAndDelete(data._id)
-
-      // send back score data and status ok
+      const deletedUser = await PokeModel.findByIdAndDelete(
+        id
+      ).exec();
+        
+      // send back User data and status ok
       res.status(201).send({
         message: `Deleted Player`,
-        payload: deletedScore,
-      })
+        payload: deletedUser,
+      });
     } catch (e) {
-      console.log(e)
+      console.log(e);
       // send back error mesage
       res.status(400).send({
-        message: 'error happened',
+        message: "error happened",
         data: e,
-      })
+      });
     }
   }
 
-  deleteScore()
-})
+  deleteScore();
+});
 
-// getting ONE score document from an ID
-app.get('/get-score', (req, res) => {
-  // grab the new score info
-  const data = req.body
-
-  async function getScore() {
-    try {
-      // find the document with the ID input on an API for it to perform the get action with .findByIdAndget
-      const getScore = await scoreModel.findById(data._id)
-
-      // send back score data and status ok
-      res.status(201).send({
-        message: `User's stats`,
-        payload: getScore,
-      })
-    } catch (e) {
-      console.log(e)
-      // send back error mesage
-      res.status(400).send({
-        message: 'error happened',
-        data: e,
-      })
-    }
-  }
-
-  getScore()
-})
-*/
 // server listens on port 3000
 app.listen(PORT, () => {
   console.log(`Server is running on port:`, PORT)
