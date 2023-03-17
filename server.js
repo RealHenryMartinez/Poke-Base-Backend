@@ -98,10 +98,7 @@ app.get("/poke-cards/:id", (req, res) => {
 });
 
 // getting score from ALL USERS
-app.get('/poke-cards', (req, res) => {
-  // data from your API through a request in the body
-  const data = req.body
-
+app.get('/poke-cards', async(req, res) => {
   async function getAllPokemon() {
     try {
       // find will ALWAYS RETURN ARRAY
@@ -122,8 +119,8 @@ app.get('/poke-cards', (req, res) => {
   }
 
   // needs to be calling the async function
-  console.log(data)
   getAllPokemon()
+
 })
 
 

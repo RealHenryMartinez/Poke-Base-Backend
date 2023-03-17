@@ -4,10 +4,13 @@ const { v4: uuidv4 } = require('uuid');
 let path = require('path');
 let PokeModel = require('../models/pokemonModel');
 
+// storage that stores the file
 const storage = multer.diskStorage({
+    // storing in folder called images
     destination: function(req, file, cb) {
         cb(null, 'images');
     },
+    // include this information
     filename: function(req, file, cb) {   
         cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
     }
